@@ -73,7 +73,7 @@ const AdaptiveCardContainer: React.FunctionComponent<AdaptiveCardContainerProps>
 
         const renderedCard = adaptiveCard.render();
         if (renderedCard && mountRef.current) mountRef.current.appendChild(renderedCard);
-    }, [attributes]);
+    }, [attributes, conversation]);
 
     if (!attributes || !attributes[ADAPTIVE_CARD_KEY_NAME]) {
         return (
