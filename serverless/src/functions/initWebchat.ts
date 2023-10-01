@@ -164,7 +164,7 @@ export const handler: ServerlessFunctionSignature = async function (
         // use it to send a message in behalf of the user with the query as body
         await sendUserMessage(conversationSid, identity, event.formData.query, context);
         // and then send another message from Concierge, letting the user know that an agent will help them soon
-        await sendWelcomeMessage(conversationSid, customerFriendlyName, context);
+        // await sendWelcomeMessage(conversationSid, customerFriendlyName, context);
     }
 
     response.setStatusCode(200);
