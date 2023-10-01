@@ -66,8 +66,8 @@ const AdaptiveCardContainer: React.FunctionComponent<AdaptiveCardContainerProps>
                     preparedMessage = preparedMessage.setBody(text);
                     preparedMessage.build().send();
                 }
-            } else if (action instanceof AdaptiveCards.OpenUrlAction) {
-                if (action && action.url) openWindow(action.url);
+            } else if (action instanceof AdaptiveCards.OpenUrlAction && action && action.url) {
+                openWindow(action.url);
             }
         };
 
