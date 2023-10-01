@@ -53,8 +53,6 @@ const AdaptiveCardContainer: React.FunctionComponent<AdaptiveCardContainerProps>
 
         // Provide an onExecuteAction handler to handle the Action.Submit
         adaptiveCard.onExecuteAction = (action: AdaptiveCards.Action) => {
-            console.info("User clicked: ", action);
-
             if (action instanceof AdaptiveCards.SubmitAction) {
                 // Send back data as text
                 if (action?.data?.hasOwnProperty("text")) {
@@ -69,7 +67,6 @@ const AdaptiveCardContainer: React.FunctionComponent<AdaptiveCardContainerProps>
                     preparedMessage.build().send();
                 }
             } else if (action instanceof AdaptiveCards.OpenUrlAction) {
-                console.info("User clicked open URL action: ", action.url);
                 if (action && action.url) openWindow(action.url);
             }
         };
@@ -79,7 +76,6 @@ const AdaptiveCardContainer: React.FunctionComponent<AdaptiveCardContainerProps>
     }, [attributes]);
 
     if (!attributes || !attributes[ADAPTIVE_CARD_KEY_NAME]) {
-        console.log("No adaptive card found in the message", message);
         return (
             <Alert variant="warning">
                 <strong>Message error</strong> Adaptive card data is missing for this message.
