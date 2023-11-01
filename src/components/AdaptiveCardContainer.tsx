@@ -61,9 +61,41 @@ const AdaptiveCardContainer: React.FunctionComponent<AdaptiveCardContainerProps>
                         log.error("Failed sending message: no conversation found");
                         return;
                     }
-
                     let preparedMessage = conversation.prepareMessage();
                     preparedMessage = preparedMessage.setBody(text);
+                    // -- Start: Set custom demo attributes
+                    if (action?.data) {
+                        const customAttributes: any = {
+                            ...action?.data
+                        };
+                        // Demo Scenario: Restaurant Reservation
+                        if (
+                            action?.data?.hasOwnProperty("RestaurantName") &&
+                            action?.data?.hasOwnProperty("DateTime")
+                        ) {
+                            customAttributes.taskType = "dispatch_job";
+                            customAttributes.taskCategory = "restaurant_reservation";
+                        }
+                        // Demo Scenario: Room Service
+                        if (
+                            action?.data?.hasOwnProperty("EntreeSelectVal") &&
+                            action?.data?.hasOwnProperty("SideVal") &&
+                            action?.data?.hasOwnProperty("DrinkVal")
+                        ) {
+                            customAttributes.taskType = "dispatch_job";
+                            customAttributes.taskCategory = "room_service";
+                        }
+                        // Demo Scenario: Request for Amenities
+                        if (action?.data?.hasOwnProperty("RequestedItems")) {
+                            customAttributes.taskType = "dispatch_job";
+                            customAttributes.taskCategory = "request_amenities";
+                        }
+                        preparedMessage.setAttributes({
+                            ...customAttributes
+                        });
+                    }
+
+                    // -- End: Set custom demo attributes
                     preparedMessage.build().send();
                 }
             } else if (action instanceof AdaptiveCards.OpenUrlAction && action && action.url) {
