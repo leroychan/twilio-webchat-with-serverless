@@ -63,39 +63,23 @@ const AdaptiveCardContainer: React.FunctionComponent<AdaptiveCardContainerProps>
                     }
                     let preparedMessage = conversation.prepareMessage();
                     preparedMessage = preparedMessage.setBody(text);
-                    // -- Start: Set custom demo attributes
+                    // -- Start: Set custom demo attributes for Dispatch Job
                     if (action?.data) {
                         const customAttributes: any = {
                             ...action?.data
                         };
-                        // Demo Scenario: Restaurant Reservation
                         if (
-                            action?.data?.hasOwnProperty("RestaurantName") &&
-                            action?.data?.hasOwnProperty("DateTime")
-                        ) {
+                            action?.data?.hasOwnProperty("task_type") &&
+                            (action?.data as any).task_type === "dispatch_job"
+                        )
                             customAttributes.taskType = "dispatch_job";
-                            customAttributes.taskCategory = "restaurant_reservation";
-                        }
-                        // Demo Scenario: Room Service
-                        if (
-                            action?.data?.hasOwnProperty("EntreeSelectVal") &&
-                            action?.data?.hasOwnProperty("SideVal") &&
-                            action?.data?.hasOwnProperty("DrinkVal")
-                        ) {
-                            customAttributes.taskType = "dispatch_job";
-                            customAttributes.taskCategory = "room_service";
-                        }
-                        // Demo Scenario: Request for Amenities
-                        if (action?.data?.hasOwnProperty("RequestedItems")) {
-                            customAttributes.taskType = "dispatch_job";
-                            customAttributes.taskCategory = "request_amenities";
-                        }
+                        customAttributes.taskCategory = (action?.data as any).task_category;
                         preparedMessage.setAttributes({
                             ...customAttributes
                         });
                     }
 
-                    // -- End: Set custom demo attributes
+                    // -- End: Set custom demo attributes for Dispatch Job
                     preparedMessage.build().send();
                 }
             } else if (action instanceof AdaptiveCards.OpenUrlAction && action && action.url) {
